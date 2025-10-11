@@ -19,7 +19,7 @@ LOG_DIR="$BASE_DIR/logs"
 INDEX_DIR="$HOME/hg38/salmon_partial_sa_index/default"
 
 # SRA Samples
-samples_to_quant=(SRR1039508 SRR1039509 SRR1039512 SRR1039513 SRR1039516 SRR1039517 SRR1039520)
+samples_to_quant=(SRR1039508 SRR1039509)
 
 # ====== PREP ======
 mkdir -p "$RAW_DIR" "$FASTQ_DIR" "$SALMON_DIR" "$LOG_DIR"
