@@ -1,10 +1,17 @@
-#### Week 11 RScript ####
+# RNA-seq Analysis in R: tximport and Gene-level Summarization
+# Author: Md. Jubayer Hossain
+# Affiliation: DeepBio Limited | CHIRAL Bangladesh
+# Date: October 2025
+# Description:
+#   Imports transcript-level quantifications from Salmon
+#   and summarizes to gene-level counts for DESeq2. 
 
-### Import the data from salmon quant to DESeq2 using tximport ###
 
-# Get tximport if you don't already have it installed
 
+# Install Bioconductor Packages 
 BiocManager::install("tximport")
+BiocManager::install("DESeq2")
+BiocManager::install("EnsDb.Hsapiens.v86")
 
 # Load libraries
 library(tximport)
@@ -12,8 +19,7 @@ library(DESeq2)
 library(EnsDb.Hsapiens.v86)
 library(tidyverse)
 
-## Get the mapping from transcript IDs to gene symbols ##
-
+# Get the mapping from transcript IDs to gene symbols 
 # What are the columns in the database?
 columns(EnsDb.Hsapiens.v86)
 
@@ -25,7 +31,7 @@ tx2gene <- AnnotationDbi::select(EnsDb.Hsapiens.v86,
 # Remove the gene ID column
 tx2gene <- dplyr::select(tx2gene, -GENEID)
 
-## Get the quant files and metadata ##
+# Get the quant files and metadata
 # Collect the sample quant files
 samples <- list.dirs('Salmon.out/', recursive = FALSE, full.names = FALSE)
 quant_files <- file.path('Salmon.out', samples, 'quant.sf')
@@ -41,8 +47,7 @@ colData <- data.frame(
   condition = rep(c('untreated', 'dex'), 4)
 )
 
-## Compile the tximport counts object and make DESeq dataset ##
-
+# Compile the tximport counts object and make DESeq dataset
 # Get tximport counts object
 txi <- tximport(files = quant_files, 
                 type = 'salmon',
@@ -54,8 +59,7 @@ dds <- DESeqDataSetFromTximport(txi = txi,
                                 colData = colData,
                                 design = ~condition)
 
-### Do DESeq analysis ! ###
-
+# Do DESeq analysis
 # PCA
 vsd <- vst(dds)
 plotPCA(vsd)
@@ -65,15 +69,3 @@ dds <- DESeq(dds)
 
 # Get the results
 resdf <- results(dds)
-
-
-
-############ Hands on Activity (time permititng) ############ 
-
-# Get the raw data from https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE103843
-
-# Specifically, get SRR6035978 SRR6035979 SRR6035982 SRR6035983
-
-# Then import to R using tximport 
-
-# Run typical DEG analysis comparing siFLI1 to siNEG
