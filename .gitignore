@@ -1,4 +1,12 @@
 # Byte-compiled / optimized / DLL files
+
+sra/
+fastq/
+qc_fastqc/ 
+qc_multiqc/ 
+salmon.out/ 
+
+
 __pycache__/
 *.py[codz]
 *$py.class
