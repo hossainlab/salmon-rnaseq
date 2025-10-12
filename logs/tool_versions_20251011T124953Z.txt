@@ -1,7 +1,0 @@
-UTC: 2025-10-11 12:49:53
-
-
-salmon 1.10.3
-FastQC v0.11.9
-multiqc, version 1.31
-pigz 2.8

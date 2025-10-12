@@ -1,10 +1,54 @@
 # Byte-compiled / optimized / DLL files
 
-sra/
+# ===========================
+# Git ignore for RNA-seq repo
+# ===========================
+
+# FASTQ and sequencing data
+*.fastq
+*.fastq.gz
+*.fq
+*.fq.gz
+
+# FASTA / reference genomes / indexes
+*.fa
+*.fa.gz
+*.fasta
+*.fasta.gz
+*.gff
+*.gtf
+*.gff3
+*.gff3.gz
+*_index/
+human_salmon_index/
+transcripts_and_decoys.fa.gz
+decoys.txt
+
+# Large result folders
 fastq/
-qc_fastqc/ 
-qc_multiqc/ 
-salmon.out/ 
+outputs/qc/
+outputs/figures/
+outputs/tables/
+
+# Temporary and log files
+*.log
+*.tmp
+*.out
+*.err
+*.zip
+
+# OS / editor files
+.DS_Store
+Thumbs.db
+*.swp
+
+# Conda / Python environments
+env/
+.venv/
+*.env
+__pycache__/
+*.pyc
+
 
 
 __pycache__/

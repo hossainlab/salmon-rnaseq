@@ -15,6 +15,11 @@ It automates the full workflow from **SRA download ? FASTQ generation ? Transcri
 - Organized directory structure for clarity and reproducibility 
 
 
+# Create a directory to store your references
+mkdir -p ~/references/hg38
+cd ~/references/hg38
+
+
 
 ## Quick Start
 

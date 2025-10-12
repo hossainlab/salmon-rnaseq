@@ -1,0 +1,11 @@
+{
+    "salmon_version": "1.10.2",
+    "index": "../inputs/human_salmon_index",
+    "libType": "A",
+    "mates1": "../fastq/SRR1039518_1.fastq.gz",
+    "mates2": "../fastq/SRR1039518_2.fastq.gz",
+    "threads": "28",
+    "validateMappings": [],
+    "output": "../outputs/salmon_out/SRR1039518",
+    "auxDir": "aux_info"
+}

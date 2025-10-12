@@ -6,7 +6,8 @@ channels:
 
 dependencies:
   # Core tools
-  - sra-tools=3.1.1        # provides prefetch, fasterq-dump, etc.
-  - salmon=1.10.2          # transcript quantification
-  - fastqc=0.12.1          # optional QC
-  - multiqc=1.17           # summary reports
+  - fastq-dl         # Download FASTQ files from SRA or ENA repositories.
+  - salmon           # transcript quantification
+  - fastqc           # optional QC
+  - multiqc          # summary reports
+  
