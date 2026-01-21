@@ -6,8 +6,9 @@ channels:
 
 dependencies:
   # Core tools
-  - fastq-dl         # Download FASTQ files from SRA or ENA repositories.
-  - salmon           # transcript quantification
-  - fastqc           # optional QC
-  - multiqc          # summary reports
+  - sra-tools                   # SRA toolkit for downloading sequencing data
+  - parallel-fastq-dump         # Download FASTQ files from SRA or ENA repositories. (https://github.com/rvalieris/parallel-fastq-dump)
+  - salmon                      # transcript quantification
+  - fastqc                      # optional QC
+  - multiqc                     # summary reports
   

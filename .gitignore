@@ -10,6 +10,7 @@
 *.fq
 *.fq.gz
 
+
 # FASTA / reference genomes / indexes
 *.fa
 *.fa.gz

@@ -5,8 +5,6 @@
 This repository contains a **publication-ready RNA-seq quantification pipeline** built around **[Salmon](https://combine-lab.github.io/salmon/)** for lightweight and accurate transcript quantification.  
 It automates the full workflow from **SRA download ? FASTQ generation ? Transcript quantification (Salmon)**, followed by **R-based downstream analysis** (DESeq2, functional enrichment, and visualization). The pipeline is designed for **reproducibility**, **modularity**, and **high-performance computing environments**, with detailed timing logs for benchmarking.
 
-![](img/salmon.png)
-
 ## Features
 
 - Fully automated and parallelized
