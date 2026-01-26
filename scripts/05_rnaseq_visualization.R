@@ -1,6 +1,13 @@
-# load packages 
+# Install package
+pak::pkg_install(c(
+  "EnhancedVolcano", 
+  "pheatmap",
+  "PoiClaClu",
+  "tidyplots" 
+))
+
+# Load packages 
 library(tidyverse)
-library(tidyplots)
 library(RColorBrewer)
 library(EnhancedVolcano)
 library(pheatmap)
