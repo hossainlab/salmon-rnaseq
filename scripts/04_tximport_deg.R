@@ -7,9 +7,7 @@
 #   and summarizes to gene-level counts for DESeq2. 
 
 # Install Bioconductor Packages 
-BiocManager::install("tximport")
-BiocManager::install("DESeq2")
-BiocManager::install("EnsDb.Hsapiens.v86")
+pak::pkg_install(c("tidyverse", "tximport", "DESeq2", "EnsDb.Hsapiens.v86"))
 
 # Load libraries
 library(tidyverse)
@@ -20,11 +18,11 @@ library(EnsDb.Hsapiens.v86)
 
 # Get the quant files and metadata
 # Collect the sample quant files
-samples <- list.dirs('outputs/Salmon_out', recursive = FALSE, full.names = FALSE)
+samples <- list.dirs('outputs/salmon_out', recursive = FALSE, full.names = FALSE)
 samples
 
 # check quant files 
-quant_files <- file.path('outputs/Salmon_out', samples, 'quant.sf')
+quant_files <- file.path('outputs/salmon_out', samples, 'quant.sf')
 quant_files
 
 # sample names 
@@ -39,26 +37,29 @@ file.exists(quant_files)
 # Metadata for DESeq2: https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE52778
 col_data <- data.frame(
   row.names = samples,
-  cell_line = rep(c("N61311","N052611","N080611","N061011"), each = 4),
-  condition = rep(c("untreated","dexamethasone","albuterol","albuterol_dexamethasone"), times = 4)
+  condition = rep(c("untreated","dexamethasone"), times = 4)
 )
+
 
 # condition as factor 
 col_data$condition <- factor(col_data$condition)
 
-
 # Get the mapping from transcript IDs to gene symbols 
 # What are the columns in the database?
 columns(EnsDb.Hsapiens.v86)
+keys(EnsDb.Hsapiens.v86)
 
 # Get the TXID and SYMBOL columns for all entries in database
 tx2gene <- AnnotationDbi::select(EnsDb.Hsapiens.v86, 
                                  keys = keys(EnsDb.Hsapiens.v86),
                                  columns = c('TXID', 'SYMBOL'))
 
+# check tx2gene 
+head(tx2gene)
+
 # Remove the gene ID column
 tx2gene <- dplyr::select(tx2gene, -GENEID)
-
+head(tx2gene)
 
 # Compile the tximport counts object and make DESeq dataset
 # Get tximport counts object
@@ -70,8 +71,15 @@ txi <- tximport(files = quant_files,
 # class of txi 
 class(txi)
 
+# explore raw counts 
+txi$counts
+
+# explore normalizec counts 
+txi$abundance
+
 # raw counts 
 raw_counts <- txi$counts
+
 write.csv(raw_counts, "outputs/tables/raw_counts.csv", row.names = FALSE)
 write_rds(raw_counts, "outputs/tables/raw_counts.rds")
 
@@ -90,7 +98,12 @@ dds <- DESeqDataSetFromTximport(txi = txi,
 # Principal Component Analysis 
 rlog_dds <- rlog(dds)
 
+# PCA Plot 
+plotPCA(rlog_dds)
+
+# PCA data 
 pca_data <- plotPCA(rlog_dds, intgroup = "condition", returnData = TRUE)
+write.csv(pca_data, "outputs/tables/pca_data.csv", row.names = F)
 write_rds(pca_data, "outputs/tables/pca_data.rds")
 
 # Differential Gene Expression Analysis 
@@ -99,6 +112,7 @@ dds <- DESeq(dds)
 # Get the results
 resdf <- results(dds)
 
+write.csv(resdf, "outputs/tables/res_dds.csv", row.names = F)
 write_rds(resdf, "outputs/tables/res_dds.rds")
 
 
@@ -107,6 +121,7 @@ plotMA(resdf)
 
 # convert as data frame 
 resdf <- as.data.frame(resdf)
+rownames(resdf)
 
 resdf$gene <- rownames(resdf)
 rownames(resdf) <- NULL
